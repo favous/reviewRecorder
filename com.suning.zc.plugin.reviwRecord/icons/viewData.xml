@@ -1,0 +1,57 @@
+<!-- 
+当前column标签顺序是按表格列次序排列
+type为select要配置items标签值
+
+name：	必填				任意字符串						表单标签名，表格标题名
+type：	必填				目前支持select，input，hidden		表单类型
+def：	非必填			任意字符串						表单默认值
+order：	非hidden必填		填数字							值越小表单次序越前
+size	非必填			填数字，长与宽值用“,”分割			逗号前长值，逗号后宽值
+
+-->
+<config>
+	<column name="问题分类" type="select" def="编码错误" order="4">
+		<items>
+			<value>编码错误</value>
+			<value>需求遗漏</value>
+			<value>系统设计错误</value>
+			<value>代码结构不好</value>
+			<value>代码冗长</value>
+			<value>代码改善</value>
+			<value>违反标准</value>
+			<value>其他</value>
+		</items>
+	</column>
+        
+	<column name="严重等级" type="select" def="高" order="5">
+		<items>
+			<value>高</value>
+			<value>中</value>
+			<value>低</value>
+		</items>
+	</column>
+	
+	<column name="评审状态" type="select" def="问题提出" order="6">
+		<items>
+			<value>问题提出</value>
+			<value>调查中</value>
+			<value>已修正</value>
+			<value>不要对应</value>
+			<value>确认OK</value>
+			<value>确认NG</value>
+		</items>
+	</column>
+	
+	<column name="评审问题内容" type="input" size="450,90" order="3"></column>
+	
+	<column name="问题提出时间" type="hidden" def="sysdate"></column>
+	
+	<column name="解决者" type="input" order="1"></column>
+	
+	<column name="处理预定日" type="hidden" def="sysdate+1"></column>
+	
+	<column name="确认者" type="input" def="严斌" order="2"></column>
+	
+	<column name="确认日" type="hidden" def="sysdate+1"></column>
+
+</config>

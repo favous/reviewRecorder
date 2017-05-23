@@ -27,10 +27,11 @@ import com.suning.zc.plugin.reviwrecord.RecordDialog;
  */
 public class ReviewHandler extends AbstractHandler {
 
-    private static ILog log = Activator.getDefault().getLog();
+    // 日志会记录在workspace/.metadata/.log中
+    private static ILog LOG = Activator.getDefault().getLog();
 
     public ReviewHandler() {
-        
+
     }
 
     public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -38,26 +39,29 @@ public class ReviewHandler extends AbstractHandler {
         try {
             // 取得工作台
             IWorkbench workbench = PlatformUI.getWorkbench();
-            
+
             // 取得工作台窗口
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            
+
             // 取得工作台页面
             IWorkbenchPage page = window.getActivePage();
-            
+
             // 取得当前处于活动状态的编辑器窗口
             IEditorPart part = page.getActiveEditor();
-            
+
             if (part == null) {
                 return null;
             }
-            
-            RecordDialog recordDialog = RecordDialog.getInstance();
+
+            // 获取文本框page对象的选择对象
             ISelection selection = page.getSelection();
-            
+
             if (!(selection instanceof TextSelection)) {
                 return null;
             }
+            
+            // 获取RecordDialog单实例
+            RecordDialog recordDialog = RecordDialog.getInstance();
 
             TextSelection textSelection = (TextSelection) selection;
             recordDialog.putData("startLine", String.valueOf(textSelection.getStartLine()));
@@ -65,20 +69,20 @@ public class ReviewHandler extends AbstractHandler {
             recordDialog.putData("text", textSelection.getText());
             recordDialog.putData("offset", String.valueOf(textSelection.getOffset()));
             recordDialog.putData("length", String.valueOf(textSelection.getLength()));
-            
+
             IEditorInput input = part.getEditorInput();
             recordDialog.putData("toolTipText", input.getToolTipText());
             recordDialog.putData("name", input.getName());
 
-//        Display display = Display.getCurrent();
-//        Point point = display.getCursorLocation();
-            
+            // Display display = Display.getCurrent();
+            // Point point = display.getCursorLocation();
+
+            // 打开对话框
             recordDialog.open();
+
         } catch (Exception e) {
-            log.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage()));
+            LOG.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "代码评审异常：\r\n" + e.getMessage()));
         }
-        log.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "没有问题"));
-        log.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "一切正常"));
         return null;
     }
 }

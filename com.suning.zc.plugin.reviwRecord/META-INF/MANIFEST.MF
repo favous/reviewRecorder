@@ -11,4 +11,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jface.text
 Bundle-ClassPath: src/poi-3.10-FINAL.jar,
- .
+ .,
+ dom4j-1.6.1.jar
